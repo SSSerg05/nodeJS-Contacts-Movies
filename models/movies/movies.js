@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { nanoid } from "nanoid";
 
-const moviesPath = path.resolve("movies", "movies.json");
+const moviesPath = path.resolve("./models", "movies", "movies.json");
 
 const updateMovies = movies => fs.writeFile(moviesPath, JSON.stringify(movies, null, 2));
 
