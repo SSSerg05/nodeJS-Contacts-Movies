@@ -1,7 +1,7 @@
 import express from 'express';
 import Joi from 'joi';
 
-import contacts from '../models/contacts.js';
+import contacts from '../models/contacts/contacts.js';
 import HttpError from '../helpers/HttpError.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 
