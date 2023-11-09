@@ -13,9 +13,9 @@ const addSchema = Joi.object({
 })
 
 // список всіх фільмів
-const listMovies = async (req, res) => {
+const getAllMovies = async (req, res) => {
 
-  const result = await movies.listMovies();
+  const result = await movies.getAllMovies();
   if (!result) {
     throw HttpError(500, "Server not found");
   }
@@ -55,10 +55,10 @@ const addMovie = async (req, res) => {
 
 
 // видалення запису
-const removeMovie = async (req, res) => {
+const deleteById = async (req, res) => {
 
   const { id } = req.params;
-  const result = await movies.removeMovie(id);
+  const result = await movies.deleteById(id);
   
   if (!result) {
     throw HttpError(404, `Not found id:${id}`);
@@ -69,7 +69,7 @@ const removeMovie = async (req, res) => {
 
 
 // оновлення запису
-const updateMovie = async (req, res) => {
+const updateMovieById = async (req, res) => {
 
   const { error } = addSchema.validate(req.body);
   if (error) { 
@@ -77,7 +77,7 @@ const updateMovie = async (req, res) => {
   }
 
   const { id } = req.params;
-  const result = await movies.updateMovie(id, req.body);
+  const result = await movies.updateMovieById(id, req.body);
   if (!result) {
     throw HttpError(404, `Not found contact with id:${id}`);
   }
@@ -86,9 +86,9 @@ const updateMovie = async (req, res) => {
 }
 
 export default {
-  listMovies: ctrlWrapper(listMovies),
+  getAllMovies: ctrlWrapper(getAllMovies),
   getMovieById: ctrlWrapper(getMovieById),
-  removeMovie: ctrlWrapper(removeMovie),
+  deleteById: ctrlWrapper(deleteById),
   addMovie: ctrlWrapper(addMovie),
-  updateMovie: ctrlWrapper(updateMovie),
+  updateMovieById: ctrlWrapper(updateMovieById),
 }
