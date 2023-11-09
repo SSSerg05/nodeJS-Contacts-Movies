@@ -3,6 +3,7 @@ import logger from 'morgan'
 import cors from 'cors'
 
 import contactsRouter from './routes/api/contacts-route.js'
+import moviesRouter from './routes/api/movies-route.js';
 
 const app = express();
 
@@ -12,7 +13,8 @@ app.use(logger(formatsLogger))
 app.use(cors())
 app.use(json())
 
-app.use('/api/contacts', contactsRouter)
+app.use('/api/movies', moviesRouter);
+app.use('/api/contacts', contactsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
