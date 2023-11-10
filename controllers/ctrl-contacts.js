@@ -1,17 +1,10 @@
-import express from 'express';
-import Joi from 'joi';
-
 import contacts from '../models/contacts/contacts.js';
 import HttpError from '../helpers/HttpError.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 
-
 // схема для валідації
-const addSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(), 
-  phone: Joi.string().required()
-})
+import { contactAddSchema, contactUpdateSchema } from '../schemas/contact-schemas.js';
+
 
 // список всіх контактів
 const listContacts = async (req, res) => {
@@ -41,7 +34,7 @@ const getContactById = async (req, res) => {
 // додавання запису
 const addContact = async (req, res) => {
 
-  const { error } = addSchema.validate(req.body);
+  const { error } = contactAddSchema.validate(req.body);
   if (error) {
     throw HttpError(400, "missing required name field. " + error.message);
   }
@@ -72,7 +65,7 @@ const removeContact = async (req, res) => {
 // оновлення запису
 const updateContact = async (req, res) => {
 
-  const { error } = addSchema.validate(req.body);
+  const { error } = contactUpdateSchema.validate(req.body);
   if (error) { 
     throw HttpError(400, "Missing fields " + error.message);
   }

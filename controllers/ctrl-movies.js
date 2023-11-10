@@ -1,16 +1,10 @@
-import express from 'express';
-import Joi from 'joi';
-
 import movies from '../models/movies/movies.js';
 import HttpError from '../helpers/HttpError.js';
 import ctrlWrapper from '../decorators/ctrlWrapper.js';
 
+// схеми для валідації
+import { movieAddSchema, movieUpdateSchema } from '../schemas/movie-schemas.js';
 
-// схема для валідації
-const addSchema = Joi.object({
-  title: Joi.string().required(), 
-  director: Joi.string().required()
-})
 
 // список всіх фільмів
 const getAllMovies = async (req, res) => {
@@ -40,7 +34,7 @@ const getMovieById = async (req, res) => {
 // додавання запису
 const addMovie = async (req, res) => {
 
-  const { error } = addSchema.validate(req.body);
+  const { error } = movieAddSchema.validate(req.body);
   if (error) {
     throw HttpError(400, "missing required name field. " + error.message);
   }
@@ -71,7 +65,7 @@ const deleteById = async (req, res) => {
 // оновлення запису
 const updateMovieById = async (req, res) => {
 
-  const { error } = addSchema.validate(req.body);
+  const { error } = movieUpdateSchema.validate(req.body);
   if (error) { 
     throw HttpError(400, "Missing fields " + error.message);
   }
